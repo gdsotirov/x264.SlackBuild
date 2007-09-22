@@ -1,0 +1,11 @@
+x264: x264 (A free h264/avc encoder)
+x264:
+x264: x264 is a free library for encoding H264/AVC video streams. The code
+x264: is written from scratch by Laurent Aimar, Loren Merritt, Eric Petit
+x264: (OS X), Min Chen (vfw/asm), Justin Clay (vfw), M�ns Rullg�rd, Radek
+x264: Czyz, Christian Heine (asm), Alex Izvorski, and Alex Wright.
+x264:
+x264:
+x264:
+x264: Packaged by Georgi D. Sotirov <gdsotirov@dir.bg>
+x264:
