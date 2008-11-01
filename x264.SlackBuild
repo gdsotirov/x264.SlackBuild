@@ -7,7 +7,7 @@
 . ../slack-package.conf
 
 NAME=x264
-VERSION=20070921
+VERSION=20081031
 NUM=2245
 BUILD=1
 
@@ -23,14 +23,16 @@ CXXFLAGS=$SLKCFLAGS \
             --prefix=/usr \
             --enable-shared \
             --enable-pic \
-            --enable-pthread
+            --enable-pthread \
+	    --enable-visualize \
+            --extra-cflags=$SLKCFLAGS
 
-make || exit 1 
+make -j4 || exit 1 
 
 PKG="$TMP/package-$NAME"
 mkdir -p $PKG
 
-make DESTDIR=$PKG install
+make DESTDIR=$PKG install || exit 2
 
 bin_perms $PKG
 ( cd $PKG; strip_bin; strip_lib )
