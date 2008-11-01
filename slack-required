@@ -1,1 +1,5 @@
-pth >= 2.0.7
+glibc-solibs >= 2.7
+libX11 >= 1.1.4
+libXau >= 1.0.3
+libXdmcp >= 1.0.2
+libxcb >= 1.0
