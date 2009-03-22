@@ -7,13 +7,19 @@
 . ../slack-package.conf
 
 NAME=x264
-VERSION=20081031
-NUM=2245
+VERSION=`date +%Y%m%d`
 BUILD=1
 
 cd $TMP
-tar -jxvf $CWD/$NAME-snapshot-$VERSION-$NUM.tar.bz2
-SRC=$TMP/$NAME-snapshot-$VERSION-$NUM
+git clone git://git.videolan.org/x264.git
+mv $NAME $NAME-$VERSION
+SRC=$TMP/$NAME-$VERSION
+
+# Backup the source
+tar -cf $NAME-$VERSION.tar $NAME-$VERSION
+bzip2 $NAME-$VERSION.tar
+mv $NAME-$VERSION.tar.bz2 $CWD
+
 cd $SRC
 fix_source
 
@@ -25,14 +31,14 @@ CXXFLAGS=$SLKCFLAGS \
             --enable-pic \
             --enable-pthread \
 	    --enable-visualize \
-            --extra-cflags=$SLKCFLAGS
+            --extra-cflags=$SLKCFLAGS || exit 1
 
-make -j4 || exit 1 
+make -j4 || exit 2
 
 PKG="$TMP/package-$NAME"
 mkdir -p $PKG
 
-make DESTDIR=$PKG install || exit 2
+make DESTDIR=$PKG install || exit 3
 
 bin_perms $PKG
 ( cd $PKG; strip_bin; strip_lib )
@@ -53,6 +59,12 @@ makepkg -l y -c n $PKG_DIR/$PKGNAME.tgz
 cd $PKG_DIR
 md5sum $PKGNAME.tgz > $PKGNAME.tgz.md5
 cat $PKG/install/slack-desc > $PKG_DIR/$PKGNAME.txt
+
+# Backup the source
+cd $TMP
+tar -cf $NAME-$VERSION.tar $NAME-$VERSION
+bzip2 $NAME-$VERSION.tar
+mv $NAME-$VERSION.tar.bz2 $CWD
 
 if [ "$1" == "--cleanup" ]; then
   rm -r $SRC
