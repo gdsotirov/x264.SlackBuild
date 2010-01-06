@@ -1,5 +1,5 @@
-glibc-solibs >= 2.7
-libX11 >= 1.1.5
+glibc-solibs >= 2.9
+libX11 >= 1.2.2
 libXau >= 1.0.4
 libXdmcp >= 1.0.2
-libxcb >= 1.1
+libxcb >= 1.3
