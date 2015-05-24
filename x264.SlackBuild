@@ -19,13 +19,13 @@
 #
 # Visit SlackPack at http://sotirov-bg.net/slackpack/
 #
-# $Id: x264.SlackBuild,v 1.7 2015/05/17 10:51:18 gsotirov Exp $
+# $Id: x264.SlackBuild,v 1.8 2015/05/24 13:03:54 gsotirov Exp $
 #
 
 . ../../slack-package.conf
 
 NAME=x264
-VERSION=20131101
+VERSION=20150223
 ARCH=${ARCH:-i486}
 BUILD=${BUILD:-1}
 
@@ -60,7 +60,7 @@ if [ ! -e $CWD/$NAME-$VERSION.tar.bz2 ]; then
   mv $NAME-$VERSION.tar.bz2 $CWD
 else
   tar -xvf $CWD/$NAME-$VERSION.tar.?z* || exit 3
-  mv ${NAME}-snapshot-${VERSION}-2245-stable $NAME-$VERSION
+  #mv ${NAME}-snapshot-${VERSION}-2245-stable $NAME-$VERSION
 fi
 
 cd $SRC
@@ -76,8 +76,7 @@ CXXFLAGS=$SLKCFLAGS \
             --prefix=/usr \
             --libdir=/usr/lib${LIBDIRSUFFIX} \
             --enable-shared \
-            --enable-pic \
-            --enable-visualize || exit 4
+            --enable-pic || exit 4
 
 # Build & install
 make -j4 || exit 5
