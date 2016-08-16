@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # Slackware build script for x264
-# Copyright (C) 2007-2011 Georgi D. Sotirov <gdsotirov@dir.bg>
+# Copyright (C) 2007-2016 Georgi D. Sotirov <gdsotirov@dir.bg>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -19,13 +19,13 @@
 #
 # Visit SlackPack at http://sotirov-bg.net/slackpack/
 #
-# $Id: x264.SlackBuild,v 1.5 2010/09/05 16:39:26 gsotirov Exp $
+# $Id: x264.SlackBuild,v 1.5.2.1 2016/08/16 18:07:06 gsotirov Exp $
 #
 
-. ../slack-package.conf
+. ../../slack-package.conf
 
 NAME=x264
-VERSION=`date +%Y%m%d`
+VERSION=${VERSION:-`date +%Y%m%d`}
 ARCH=${ARCH:-i486}
 BUILD=${BUILD:-1}
 
@@ -49,14 +49,18 @@ if [ -e $PKG -a -d $PKG ]; then
 fi
 mkdir -p $PKG
 
-# Get, backup and fix source
+# Get, backup and fix source (if not present)
 cd $TMP
-git clone git://git.videolan.org/x264.git
+if [ ! -e $CWD/$NAME-$VERSION.tar.?z* ]; then
+git clone git://git.videolan.org/x264.git || exit 3
 mv $NAME $NAME-$VERSION
 
 tar -cf $NAME-$VERSION.tar $NAME-$VERSION
 bzip2 $NAME-$VERSION.tar
 mv $NAME-$VERSION.tar.bz2 $CWD
+else
+tar -xvf $CWD/$NAME-$VERSION.tar.?z* || exit 3
+fi
 
 cd $SRC
 fix_source
@@ -69,6 +73,7 @@ CFLAGS=$SLKCFLAGS \
 CXXFLAGS=$SLKCFLAGS \
 ./configure --host=$ARCH-slackware-linux \
             --prefix=/usr \
+            --libdir=/usr/lib${LIBDIRSUFFIX} \
             --enable-shared \
             --enable-pic \
             --enable-visualize || exit 1
