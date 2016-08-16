@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # Slackware build script for x264
-# Copyright (C) 2007-2015 Georgi D. Sotirov <gdsotirov@dir.bg>
+# Copyright (C) 2007-2016 Georgi D. Sotirov <gdsotirov@dir.bg>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -19,14 +19,14 @@
 #
 # Visit SlackPack at http://sotirov-bg.net/slackpack/
 #
-# $Id: x264.SlackBuild,v 1.8 2015/05/24 13:03:54 gsotirov Exp $
+# $Id: x264.SlackBuild,v 1.9 2016/08/16 18:40:57 gsotirov Exp $
 #
 
 . ../../slack-package.conf
 
 NAME=x264
-VERSION=20150223
-ARCH=${ARCH:-i486}
+VERSION=${VERSION:-20160816}
+ARCH=${ARCH:-i586}
 BUILD=${BUILD:-1}
 
 TMP=${TMP:-/tmp}
@@ -49,9 +49,9 @@ if [ -e $PKG -a -d $PKG ]; then
 fi
 mkdir -p $PKG
 
-# Get, backup and fix source
+# Get, backup and fix source (if not present)
 cd $TMP
-if [ ! -e $CWD/$NAME-$VERSION.tar.bz2 ]; then
+if [ ! -e $CWD/$NAME-$VERSION.tar.?z* ]; then
   git clone git://git.videolan.org/x264.git || exit 3
   mv $NAME $NAME-$VERSION
 
@@ -60,7 +60,6 @@ if [ ! -e $CWD/$NAME-$VERSION.tar.bz2 ]; then
   mv $NAME-$VERSION.tar.bz2 $CWD
 else
   tar -xvf $CWD/$NAME-$VERSION.tar.?z* || exit 3
-  #mv ${NAME}-snapshot-${VERSION}-2245-stable $NAME-$VERSION
 fi
 
 cd $SRC
