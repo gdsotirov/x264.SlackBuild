@@ -1,0 +1,12 @@
+diff -urNad x264-20100429-orig/configure x264-20100429/configure
+--- x264-20100429-orig/configure	2016-08-26 00:03:46.000000000 +0300
++++ x264-20100429/configure	2016-08-26 00:16:15.000000000 +0300
+@@ -637,7 +637,7 @@
+     # and it doesn't save any speed anyway on 4.4, so disable it
+     CFLAGS="-O3 -fno-fast-math $CFLAGS"
+ else
+-    CFLAGS="-O3 -ffast-math $CFLAGS"
++    CFLAGS="$CFLAGS -O3 -ffast-math"
+ fi
+ 
+ if cc_check "stdio.h" "" "fseeko(stdin,0,0);" ; then
